@@ -1,0 +1,98 @@
+[versions]
+androidxActivityCompose = '1.6.1'
+androidxBiometrics = '1.1.0'
+androidxBrowser = '1.4.0'
+androidxCamera2 = "1.2.0"
+androidxCompose = '1.3.2'
+androidxComposeMaterialIcons = '1.3.1'
+androidxComposeMaterial3 = "1.0.1"
+androidxCore = '1.9.0'
+androidxLifecycle = '2.5.1'
+androidxNavigation = "2.5.3"
+androidxRoom = "2.4.3"
+androidxSecurityCrypto = "1.1.0-alpha03"
+androidxTestEspresso = "3.5.1"
+androidxTestExtJunit = "1.1.5"
+androidxTestRules = "1.5.0"
+coilCompose = "2.2.2"
+googleAccompanistSytemuicontroller = "0.28.0"
+googleMlkit = "17.0.7"
+gradlePlay = "1.1.0"
+googleTruth = "1.1.3"
+junit = "4.13.2"
+koin = "3.3.2"
+koinCompose = "3.4.1"
+kotlinxCore = '1.7.20'
+kotlinxCoroutines = '1.6.4'
+kotlinxSerialization = "1.4.1"
+ktor = "2.2.2"
+mockk = "1.13.3"
+timber = "5.0.1"
+firebase = "31.5.0"
+
+[libraries]
+# implementations
+accompanist-sytemuicontroller = { module = 'com.google.accompanist:accompanist-systemuicontroller', version.ref = 'googleAccompanistSytemuicontroller' }
+androidx-activity-compose = { module = 'androidx.activity:activity-compose', version.ref = 'androidxActivityCompose' }
+androidx-browser = { module = 'androidx.browser:browser', version.ref = 'androidxBrowser' }
+androidx-camera-lifecycle = { module = 'androidx.camera:camera-lifecycle', version.ref = 'androidxCamera2' }
+androidx-camera-view = { module = 'androidx.camera:camera-view', version.ref = 'androidxCamera2' }
+androidx-camera2 = { module = 'androidx.camera:camera-camera2', version.ref = 'androidxCamera2' }
+androidx-compose-material-icons-extended = { module = 'androidx.compose.material:material-icons-extended', version.ref = 'androidxComposeMaterialIcons' }
+androidx-compose-material3 = { module = 'androidx.compose.material3:material3', version.ref = 'androidxComposeMaterial3' }
+androidx-compose-ui = { module = 'androidx.compose.ui:ui', version.ref = 'androidxCompose' }
+androidx-core-ktx = { module = 'androidx.core:core-ktx', version.ref = 'androidxCore' }
+androidx-lifecycle = { module = 'androidx.lifecycle:lifecycle-runtime-ktx', version.ref = 'androidxLifecycle' }
+androidx-navigation-compose = { module = 'androidx.navigation:navigation-compose', version.ref = 'androidxNavigation' }
+androidx-room = { module = 'androidx.room:room-ktx', version.ref = 'androidxRoom' }
+androidx-room-compiler = { module = 'androidx.room:room-compiler', version.ref = 'androidxRoom' }
+androidx-room-runtime = { module = 'androidx.room:room-runtime', version.ref = 'androidxRoom' }
+androidx-security-crypto = { module = 'androidx.security:security-crypto-ktx', version.ref = 'androidxSecurityCrypto' }
+androidx-biometrics = { module = 'androidx.biometric:biometric', version.ref = 'androidxBiometrics' }
+timber = { module = 'com.jakewharton.timber:timber', version.ref = 'timber' }
+coil-compose = { module = 'io.coil-kt:coil-compose', version.ref = 'coilCompose' }
+koin-android = { module = 'io.insert-koin:koin-android', version.ref = 'koin' }
+koin-android-compose = { module = 'io.insert-koin:koin-androidx-compose', version.ref = 'koinCompose' }
+koin-android-navigation = { module = 'io.insert-koin:koin-androidx-navigation', version.ref = 'koin' }
+kotlin-stdlib = { module = 'org.jetbrains.kotlin:kotlin-stdlib', version.ref = 'kotlinxCore' }
+kotlinx-coroutines = { module = 'org.jetbrains.kotlinx:kotlinx-coroutines-core', version.ref = 'kotlinxCoroutines' }
+kotlinx-serialization = { module = 'org.jetbrains.kotlinx:kotlinx-serialization-json', version.ref = 'kotlinxSerialization' }
+ktor-android = { module = 'io.ktor:ktor-client-android', version.ref = 'ktor' }
+ktor-auth = { module = 'io.ktor:ktor-client-auth', version.ref = 'ktor' }
+ktor-core = { module = 'io.ktor:ktor-client-core', version.ref = 'ktor' }
+ktor-content-negotiation = { module = 'io.ktor:ktor-client-content-negotiation', version.ref = 'ktor' }
+ktor-logging = { module = 'io.ktor:ktor-client-logging', version.ref = 'ktor' }
+ktor-serialization = { module = 'io.ktor:ktor-serialization-kotlinx-json', version.ref = 'ktor' }
+mlkit-image-labeling = { module = 'com.google.mlkit:image-labeling', version.ref = 'googleMlkit' }
+firebase-bom = { module = 'com.google.firebase:firebase-bom', version.ref = 'firebase' }
+firebase-crashlytics = { module = 'com.google.firebase:firebase-crashlytics-ktx' }
+firebase-analytics = { module = 'com.google.firebase:firebase-analytics-ktx' }
+
+# testImplementations
+google-truth = { module = 'com.google.truth:truth', version.ref = 'googleTruth' }
+junit = { module = 'junit:junit', version.ref = 'junit' }
+kotlinx-coroutines-test = { module = 'org.jetbrains.kotlinx:kotlinx-coroutines-test', version.ref = 'kotlinxCoroutines' }
+mockk = { module = 'io.mockk:mockk', version.ref = 'mockk' }
+mockk-agent-jvm = { module = 'io.mockk:mockk-agent-jvm', version.ref = 'mockk' }
+
+# androidTestImplementations
+androidx-compose-ui-test-junit4 = { module = 'androidx.compose.ui:ui-test-junit4', version.ref = 'androidxCompose' }
+androidx-navigation-testing = { module = 'androidx.navigation:navigation-testing', version.ref = 'androidxNavigation' }
+androidx-test-espresso = { module = 'androidx.test.espresso:espresso-core', version.ref = 'androidxTestEspresso' }
+androidx-test-ext-junit = { module = 'androidx.test.ext:junit', version.ref = 'androidxTestExtJunit' }
+androidx-test-rules = { module = 'androidx.test:rules', version.ref = 'androidxTestRules' }
+koin-test-junit4 = { module = 'io.insert-koin:koin-test-junit4', version.ref = 'koin' }
+
+# debugImplementations
+androidx-compose-test-manifest = { module = 'androidx.compose.ui:ui-test-manifest', version.ref = 'androidxCompose' }
+androidx-compose-ui-tooling = { module = 'androidx.compose.ui:ui-tooling', version.ref = 'androidxCompose' }
+androidx-compose-ui-tooling-preview = { module = 'androidx.compose.ui:ui-tooling-preview', version.ref = 'androidxCompose' }
+
+[plugins]
+gradle-versions-filter = { id = "se.ascp.gradle.gradle-versions-filter", version = "0.1.16" }
+gradle-play-publisher = { id = "com.github.triplet.play", version = "3.8.1"}
+android-application = { id = "com.android.application", version = "7.3.1" }
+android-library = { id = "com.android.library", version = "7.3.1" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinxCore" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxCore" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics" }

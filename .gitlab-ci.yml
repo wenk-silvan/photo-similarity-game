@@ -1,0 +1,99 @@
+variables:
+  RUNNER: "mac"
+  IMG: "androidsdk/android-31"
+
+before_script:
+  - chmod +x ./gradlew
+
+stages:
+  - build
+  - test
+#  - release
+  - publish
+
+lint:
+  image: $IMG
+  tags:
+    - $RUNNER
+  interruptible: true
+  stage: build
+  script:
+    - echo "running lint job"
+    - ./gradlew lint
+
+assembleDebug:
+  image: $IMG
+  tags:
+    - $RUNNER
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^feature_siw/ || $CI_COMMIT_BRANCH =~ /^develop_siw/
+  interruptible: true
+  stage: build
+  script:
+    - echo "running assemble debug (build) job"
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/
+
+assembleRelease:
+  image: $IMG
+  tags:
+    - $RUNNER
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^master_siw/
+  interruptible: true
+  variables:
+    SECURE_FILES_DOWNLOAD_PATH: './'
+  stage: build
+  script:
+    - echo "running assemble release (build) job"
+    - apt update && apt install -y curl
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - ./gradlew assembleRelease
+  artifacts:
+    paths:
+      - app/build/outputs/
+
+test:
+  image: $IMG
+  tags:
+    - $RUNNER
+  interruptible: true
+  stage: test
+  script:
+    - echo "running unitTest job"
+    - ./gradlew test
+
+#release:
+#  image: registry.gitlab.com/gitlab-org/release-cli:latest
+#  tags:
+#    - $RUNNER
+#  interruptible: true
+#  stage: release
+#  rules:
+#    - if: $CI_COMMIT_BRANCH =~ /^master_siw/
+#  script:
+#    - echo "running release job"
+#    - sudo curl --location --output /usr/local/bin/release-cli "https://gitlab.com/api/v4/projects/gitlab-org%2Frelease-cli/packages/generic/release-cli/latest/release-cli-linux-amd64"
+#    - sudo chmod +x /usr/local/bin/release-cli
+#  release:
+#    tag_name: '$CI_COMMIT_TAG'
+#    description: '$CI_COMMIT_TAG'
+
+publishCredentials:
+  image: $IMG
+  tags:
+    - $RUNNER
+  interruptible: true
+  variables:
+    SECURE_FILES_DOWNLOAD_PATH: './'
+  when: manual
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^master_siw/
+  stage: publish
+  script:
+    - echo "running publish job"
+    - apt update && apt install -y curl
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - ./gradlew publishCredentialsReleaseBundle

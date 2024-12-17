@@ -1,0 +1,62 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 28
+        targetSdk 33
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    namespace 'ch.wenksi.photosimilaritygame.data'
+}
+
+dependencies {
+    implementation project(path: ':domain')
+
+    implementation libs.androidx.security.crypto
+    implementation libs.timber
+    implementation libs.kotlin.stdlib
+    implementation libs.kotlinx.coroutines
+    implementation libs.kotlinx.serialization
+    implementation libs.ktor.android
+    implementation libs.ktor.auth
+    implementation libs.ktor.core
+    implementation libs.ktor.logging
+    implementation libs.ktor.serialization
+
+    implementation libs.androidx.room
+    kapt libs.androidx.room.compiler
+    implementation libs.androidx.room.runtime
+
+    testImplementation libs.google.truth
+    testImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.mockk
+    testImplementation libs.mockk.agent.jvm
+    testImplementation libs.junit
+}

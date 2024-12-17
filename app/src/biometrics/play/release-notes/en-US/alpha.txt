@@ -1,0 +1,4 @@
+Take photo to match the randomly loaded one from the Unsplash API. Other features are:
+- Offline mode, upload image from gallery
+- Login with username/password (1.0.1-cred)
+- Login with biometrics (1.0.1-bio)

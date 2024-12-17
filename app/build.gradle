@@ -1,0 +1,153 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.gradle.play.publisher)
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdk 34
+    def fileName = 'version.properties'
+    def versionPropsFile = file(fileName)
+
+    if (versionPropsFile.canRead()) {
+        def versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        def name = versionProps['VERSION_NAME']
+        def code = versionProps['VERSION_CODE'].toInteger()
+
+        defaultConfig {
+            applicationId "ch.wenksi.photosimilaritygame"
+            versionName name
+            versionCode code
+            minSdk 28
+            targetSdk 34
+
+            testInstrumentationRunner "ch.wenksi.photosimilaritygame.KoinTestRunner"
+            vectorDrawables {
+                useSupportLibrary true
+            }
+        }
+        increaseVersionCode(versionPropsFile)
+    } else  {
+        throw new GradleException("Could not read file 'version.properties'")
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('../photo-similarity-game-keystore.jks')
+            storePassword System.getenv('PSG_ANDROID_KEYSTORE_PASSWORD')
+            keyAlias System.getenv('PSG_ANDROID_KEY_ALIAS')
+            keyPassword System.getenv('PSG_ANDROID_KEYSTORE_PASSWORD')
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    flavorDimensions "login"
+    productFlavors {
+        credentials {
+            dimension "login"
+            versionNameSuffix "-cred"
+        }
+        biometrics {
+            dimension "login"
+            versionNameSuffix "-bio"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.3.2'
+    }
+    namespace 'ch.wenksi.photosimilaritygame'
+}
+
+play {
+    serviceAccountCredentials.set(file('../photo-similarity-game-gcc-key.json'))
+    track.set('alpha')
+}
+
+dependencies {
+    implementation project(path: ':data')
+    implementation project(path: ':domain')
+
+    implementation libs.accompanist.sytemuicontroller
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.browser
+    implementation libs.androidx.camera.lifecycle
+    implementation libs.androidx.camera.view
+    implementation libs.androidx.camera2
+    implementation libs.androidx.compose.material.icons.extended
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.lifecycle
+    implementation libs.androidx.navigation.compose
+    implementation libs.androidx.room
+    kapt libs.androidx.room.compiler
+    implementation libs.coil.compose
+    implementation libs.koin.android
+    implementation libs.koin.android.compose
+    implementation libs.koin.android.navigation
+    implementation libs.kotlinx.serialization
+    implementation libs.ktor.android
+    implementation libs.ktor.auth
+    implementation libs.ktor.core
+    implementation libs.ktor.content.negotiation
+    implementation libs.ktor.logging
+    implementation libs.ktor.serialization
+    implementation libs.mlkit.image.labeling
+    implementation libs.timber
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.crashlytics
+    implementation libs.firebase.analytics
+
+    biometricsImplementation libs.androidx.biometrics
+
+    testImplementation libs.google.truth
+    testImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.mockk
+    testImplementation libs.mockk.agent.jvm
+    testImplementation libs.junit
+
+    androidTestImplementation libs.androidx.compose.ui.test.junit4
+    androidTestImplementation libs.androidx.navigation.testing
+    androidTestImplementation libs.androidx.test.espresso
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.androidx.test.rules
+    androidTestImplementation libs.google.truth
+    androidTestImplementation libs.koin.test.junit4
+
+    debugImplementation libs.androidx.compose.test.manifest
+    debugImplementation libs.androidx.compose.ui.tooling
+}
+
+def increaseVersionCode(versionPropsFile) {
+    gradle.taskGraph.whenReady { taskGraph ->
+        if (taskGraph.hasTask(assembleRelease)) {
+            def versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionPropsFile))
+            def code = versionProps['VERSION_CODE'].toInteger() + 1
+            versionProps['VERSION_CODE']=code.toString()
+            versionProps.store(versionPropsFile.newWriter(), null)
+        }
+    }
+}

@@ -1,0 +1,1 @@
+The user gets a random picture from the Unsplash API and tries to match it by taking his own. The higher the similarity score the better. The app also supports offline mode where the user can upload an image from the gallery instead of using the random API from Unsplash.
